@@ -8,7 +8,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ECS Physics.unity
     guid: d0e0ddfcb916341129be6ef6b3ee2e92
-  - enabled: 1
-    path: Assets/Scenes/ECS Movement.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
   m_configObjects: {}

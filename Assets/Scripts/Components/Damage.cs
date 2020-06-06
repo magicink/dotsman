@@ -1,11 +1,10 @@
-﻿using System;
-using Unity.Entities;
+﻿using Unity.Entities;
 
 namespace Components
 {
-    [Serializable]
+    [GenerateAuthoringComponent]
     public struct Damage : IComponentData
     {
-        public float value;
+        public float Value;
     }
 }

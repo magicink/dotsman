@@ -1,11 +1,10 @@
-﻿using System;
-using Unity.Entities;
+﻿using Unity.Entities;
 
 namespace Components
 {
-    [Serializable]
+    [GenerateAuthoringComponent]
     public struct Health : IComponentData
     {
-        public float value, invincibleTimer, killTimer;
+        public float Value, InvincibleTimer, KillTimer;
     }
 }

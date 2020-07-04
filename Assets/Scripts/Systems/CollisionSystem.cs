@@ -7,40 +7,6 @@ namespace Systems
 {
     public class CollisionSystem : SystemBase
     {
-        private struct CollisionSystemJob : ICollisionEventsJob
-        {
-            public BufferFromEntity<CollisionBuffer> Collisions;
-
-            public void Execute(CollisionEvent collisionEvent)
-            {
-                if (Collisions.Exists(collisionEvent.Entities.EntityA))
-                    Collisions[collisionEvent.Entities.EntityA].Add(new CollisionBuffer
-                        {Entity = collisionEvent.Entities.EntityB});
-                if (Collisions.Exists(collisionEvent.Entities.EntityB))
-                    Collisions[collisionEvent.Entities.EntityB].Add(new CollisionBuffer
-                        {Entity = collisionEvent.Entities.EntityA});
-            }
-        }
-
-        private struct TriggerEventsJob : ITriggerEventsJob
-        {
-            public BufferFromEntity<TriggerBuffer> Collisions;
-
-            public void Execute(TriggerEvent triggerEvent)
-            {
-                if (Collisions.Exists(triggerEvent.Entities.EntityA))
-                    Collisions[triggerEvent.Entities.EntityA].Add(new TriggerBuffer
-                    {
-                        Entity = triggerEvent.Entities.EntityB
-                    });
-                if (Collisions.Exists(triggerEvent.Entities.EntityB))
-                    Collisions[triggerEvent.Entities.EntityB].Add(new TriggerBuffer
-                    {
-                        Entity = triggerEvent.Entities.EntityA
-                    });
-            }
-        }
-
         protected override void OnUpdate()
         {
             var physicsWorld = World.GetOrCreateSystem<BuildPhysicsWorld>().PhysicsWorld;
@@ -60,6 +26,40 @@ namespace Systems
                 Collisions = GetBufferFromEntity<TriggerBuffer>()
             }.Schedule(simulation, ref physicsWorld, Dependency);
             triggerEventsJob.Complete();
+        }
+
+        private struct CollisionSystemJob : ICollisionEventsJob
+        {
+            public BufferFromEntity<CollisionBuffer> Collisions;
+
+            public void Execute(CollisionEvent collisionEvent)
+            {
+                if (Collisions.Exists(collisionEvent.EntityA))
+                    Collisions[collisionEvent.EntityA].Add(new CollisionBuffer
+                        {Entity = collisionEvent.EntityB});
+                if (Collisions.Exists(collisionEvent.EntityB))
+                    Collisions[collisionEvent.EntityB].Add(new CollisionBuffer
+                        {Entity = collisionEvent.EntityA});
+            }
+        }
+
+        private struct TriggerEventsJob : ITriggerEventsJob
+        {
+            public BufferFromEntity<TriggerBuffer> Collisions;
+
+            public void Execute(TriggerEvent triggerEvent)
+            {
+                if (Collisions.Exists(triggerEvent.EntityA))
+                    Collisions[triggerEvent.EntityA].Add(new TriggerBuffer
+                    {
+                        Entity = triggerEvent.EntityB
+                    });
+                if (Collisions.Exists(triggerEvent.EntityB))
+                    Collisions[triggerEvent.EntityB].Add(new TriggerBuffer
+                    {
+                        Entity = triggerEvent.EntityA
+                    });
+            }
         }
     }
 }

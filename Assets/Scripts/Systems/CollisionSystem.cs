@@ -34,10 +34,10 @@ namespace Systems
 
             public void Execute(CollisionEvent collisionEvent)
             {
-                if (Collisions.Exists(collisionEvent.EntityA))
+                if (Collisions.HasComponent(collisionEvent.EntityA))
                     Collisions[collisionEvent.EntityA].Add(new CollisionBuffer
                         {Entity = collisionEvent.EntityB});
-                if (Collisions.Exists(collisionEvent.EntityB))
+                if (Collisions.HasComponent(collisionEvent.EntityB))
                     Collisions[collisionEvent.EntityB].Add(new CollisionBuffer
                         {Entity = collisionEvent.EntityA});
             }
@@ -49,12 +49,12 @@ namespace Systems
 
             public void Execute(TriggerEvent triggerEvent)
             {
-                if (Collisions.Exists(triggerEvent.EntityA))
+                if (Collisions.HasComponent(triggerEvent.EntityA))
                     Collisions[triggerEvent.EntityA].Add(new TriggerBuffer
                     {
                         Entity = triggerEvent.EntityB
                     });
-                if (Collisions.Exists(triggerEvent.EntityB))
+                if (Collisions.HasComponent(triggerEvent.EntityB))
                     Collisions[triggerEvent.EntityB].Add(new TriggerBuffer
                     {
                         Entity = triggerEvent.EntityA

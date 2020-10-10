@@ -10,7 +10,7 @@ namespace Systems
         {
             var deltaTime = Time.DeltaTime;
             var entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
-            var entityCommandBuffer = entityCommandBufferSystem.CreateCommandBuffer().ToConcurrent();
+            var entityCommandBuffer = entityCommandBufferSystem.CreateCommandBuffer().AsParallelWriter();
             
             Entities.ForEach((DynamicBuffer<CollisionBuffer> collisionBuffer, ref Health health) => {
                 for (var i = 0; i < collisionBuffer.Length; i++)
